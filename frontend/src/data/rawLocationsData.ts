@@ -69,15 +69,15 @@ export const RAW_LOCATIONS_DATA: Record<string, RawLocationProfile> = {
     }
   },
 
-  kohima: {
-    id: 'kohima',
-    name: 'Kohima',
-    state: 'Nagaland',
+  chamoli: {
+    id: 'chamoli',
+    name: 'Chamoli',
+    state: 'Uttarakhand',
     terrainType: 'Fold Mountain Terrain & Ridges',
     elevation: '1,444 m ASL',
     slopeCondition: 'Steep Terraced Slopes (32°–39°)',
     historicalActivity: 'Recorded Slide Activity on NH-29',
-    coordinates: { lat: 25.6701, lng: 94.1077 },
+    coordinates: { lat: 30.2937, lng: 79.3259 },
     historicalTrendBase: [48, 54, 63, 69],
     factors: {
       rainfall: {
@@ -137,15 +137,15 @@ export const RAW_LOCATIONS_DATA: Record<string, RawLocationProfile> = {
     }
   },
 
-  shillong: {
-    id: 'shillong',
-    name: 'Shillong',
-    state: 'Meghalaya',
+  shimla: {
+    id: 'shimla',
+    name: 'Shimla',
+    state: 'Himachal Pradesh',
     terrainType: 'Rolling Plateau & Gentle Hills',
     elevation: '1,525 m ASL',
     slopeCondition: 'Gentle to Moderate (12°–22°)',
     historicalActivity: 'Low Incidence in Urban Core',
-    coordinates: { lat: 25.5788, lng: 91.8933 },
+    coordinates: { lat: 31.1048, lng: 77.1665 },
     historicalTrendBase: [20, 22, 25, 23],
     factors: {
       rainfall: {
@@ -205,15 +205,15 @@ export const RAW_LOCATIONS_DATA: Record<string, RawLocationProfile> = {
     }
   },
 
-  aizawl: {
-    id: 'aizawl',
-    name: 'Aizawl',
-    state: 'Mizoram',
+  wayanad: {
+    id: 'wayanad',
+    name: 'Wayanad',
+    state: 'Kerala',
     terrainType: 'High Relief N-S Anticlinal Ridge',
     elevation: '1,132 m ASL',
     slopeCondition: 'Extremely Steep Scarp Slopes (45°–56°)',
     historicalActivity: 'Frequent Major Slides (Laipuitlang, Hunthar)',
-    coordinates: { lat: 23.7271, lng: 92.7176 },
+    coordinates: { lat: 11.6854, lng: 76.1320 },
     historicalTrendBase: [58, 71, 84, 89],
     factors: {
       rainfall: {
@@ -273,15 +273,15 @@ export const RAW_LOCATIONS_DATA: Record<string, RawLocationProfile> = {
     }
   },
 
-  imphal: {
-    id: 'imphal',
-    name: 'Imphal',
-    state: 'Manipur',
+  nilgiris: {
+    id: 'nilgiris',
+    name: 'Nilgiris',
+    state: 'Tamil Nadu',
     terrainType: 'Intermontane Lacustrine Basin',
     elevation: '786 m ASL',
     slopeCondition: 'Flat Valley / Gentle Basin Margin (4°–12°)',
     historicalActivity: 'Negligible in Basin Center',
-    coordinates: { lat: 24.8170, lng: 93.9368 },
+    coordinates: { lat: 11.4916, lng: 76.7337 },
     historicalTrendBase: [25, 27, 26, 28],
     factors: {
       rainfall: {
@@ -341,15 +341,15 @@ export const RAW_LOCATIONS_DATA: Record<string, RawLocationProfile> = {
     }
   },
 
-  itanagar: {
-    id: 'itanagar',
-    name: 'Itanagar',
-    state: 'Arunachal Pradesh',
+  mumbai: {
+    id: 'mumbai',
+    name: 'Mumbai',
+    state: 'Maharashtra',
     terrainType: 'Siwalik Foothills & Dissected Terraces',
     elevation: '320 m ASL',
     slopeCondition: 'Moderate to Steep Hill Cuttings (28°–36°)',
     historicalActivity: 'Monsoon Roadside Slips (NH-415)',
-    coordinates: { lat: 27.0844, lng: 93.6053 },
+    coordinates: { lat: 19.0760, lng: 72.8777 },
     historicalTrendBase: [36, 40, 44, 46],
     factors: {
       rainfall: {
@@ -409,15 +409,15 @@ export const RAW_LOCATIONS_DATA: Record<string, RawLocationProfile> = {
     }
   },
 
-  agartala: {
-    id: 'agartala',
-    name: 'Agartala',
-    state: 'Tripura',
+  tawang: {
+    id: 'tawang',
+    name: 'Tawang',
+    state: 'Arunachal Pradesh',
     terrainType: 'Low Undulating Alluvial Plain & Till',
     elevation: '13 m ASL',
     slopeCondition: 'Flat to Low Gradient Tilla (2°–8°)',
     historicalActivity: 'No Active Slide History',
-    coordinates: { lat: 23.8315, lng: 91.2868 },
+    coordinates: { lat: 27.5861, lng: 91.8594 },
     historicalTrendBase: [15, 16, 17, 18],
     factors: {
       rainfall: {

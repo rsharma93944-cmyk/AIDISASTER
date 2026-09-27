@@ -530,7 +530,7 @@ export function generateAlertFromRisk(riskData: LocationRiskData, existingAlert?
     return null;
   }
 
-  const alertId = existingAlert?.id || `ALT-NER-2026-${riskData.id.toUpperCase().slice(0, 3)}-${riskData.riskScore}`;
+  const alertId = existingAlert?.id || `ALT-IND-2026-${riskData.id.toUpperCase().slice(0, 3)}-${riskData.riskScore}`;
   const status: AlertStatus = existingAlert ? existingAlert.status : 'ACTIVE';
   
   const trigger = riskData.riskLevel === 'SEVERE'

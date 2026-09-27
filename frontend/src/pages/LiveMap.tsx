@@ -1,5 +1,5 @@
 /**
- * ResQAI Live Map — Northeast India Landslide Risk Map & Risk-Aware Safe Evacuation
+ * ResQAI Live Map — India Landslide Risk Map & Risk-Aware Safe Evacuation
  *
  * Uses: Leaflet + React-Leaflet v4 + OpenStreetMap (no API key required)
  *
@@ -7,10 +7,10 @@
  *  - Real interactive Leaflet MapContainer
  *  - Risk markers from RiskContext (existing unified data system)
  *  - Landslide markers from prototype landslides dataset
- *  - NER state metadata from nerStates.ts
+ *  - India state metadata from indianStates.ts
  *  - Risk-Aware Safe Evacuation routing engine & visualization
  *  - Dual Route Comparison (Recommended Lower-Risk vs Shortest Direct)
- *  - Designated safe shelters & relief centres across NER
+ *  - Designated safe shelters & relief centres across India
  *  - Road risk corridors with explainable landslide penalty scoring
  *  - All controls (filter, layer, search, zoom, reset) preserved
  *  - Backend-ready: API-first fallback architecture
@@ -52,7 +52,7 @@ import {
 import L from 'leaflet';
 import { useRisk } from '../context/RiskContext';
 import { RiskLevel, MapLocationData as LocationData } from '../services/riskCalculationService';
-import { NER_STATES, getAllNERDistricts, NERState } from '../data/nerStates';
+import { INDIAN_STATES, getAllIndianDistricts, IndianState } from '../data/indianStates';
 import { PROTOTYPE_LANDSLIDES, DATA_SOURCE_NOTE, LandslideItem } from '../data/landslides';
 import { SAFE_DESTINATIONS, SafeLocation } from '../data/safeLocations';
 import { ROAD_RISK_SEGMENTS, RoadRiskSegment } from '../data/roadRiskData';
@@ -63,6 +63,17 @@ import {
 import EvacuationPanel, { StartLocationOption } from '../components/evacuation/EvacuationPanel';
 import RouteSummary from '../components/evacuation/RouteSummary';
 import RouteComparison from '../components/evacuation/RouteComparison';
+import { getRescueTeams } from '../services/rescueTeamService';
+import { RescueTeam } from '../data/rescueTeams';
+
+const DEMO_SOS_REPORTS = [
+  { id: 'sos-1', lat: 27.3314, lng: 88.6138, type: 'Trapped Person', severity: 'CRITICAL', status: 'Pending', time: '10 min ago' },
+  { id: 'sos-2', lat: 25.5788, lng: 91.8933, type: 'Blocked Road', severity: 'HIGH', status: 'Assigned', time: '1 hr ago' },
+];
+
+const DEMO_DAMAGE_REPORTS = [
+  { id: 'dmg-1', lat: 26.1445, lng: 91.7362, type: 'Infrastructure Damage', status: 'Assessment', time: '2 hrs ago', needs: 'Food, Water' },
+];
 
 // ─── Fix Leaflet default marker icons for bundlers ────────────────────────────
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -90,9 +101,9 @@ const createDestIcon = (label = 'SAFE DESTINATION') =>
   });
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const NER_BOUNDS: L.LatLngBoundsExpression = [
-  [22.0, 87.5], // SW
-  [29.5, 97.5], // NE
+const INDIA_BOUNDS: L.LatLngBoundsExpression = [
+  [8.0, 68.0], // SW
+  [37.0, 97.0], // NE
 ];
 
 const RISK_COLORS: Record<string, string> = {
@@ -154,7 +165,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
   const [activeMarkerId, setActiveMarkerId] = useState<string | null>(selectedLocationId || null);
   const [activeFilter, setActiveFilter] = useState<RiskLevel | 'ALL'>('ALL');
-  const [activeLayer, setActiveLayer] = useState<'RISK' | 'RAINFALL' | 'SLOPE' | 'LANDSLIDES' | 'SATELLITE' | 'EVACUATION'>('RISK');
+  const [activeLayer, setActiveLayer] = useState<'RISK' | 'LANDSLIDES' | 'SHELTERS' | 'RESCUE_TEAMS' | 'SOS' | 'DAMAGE'>('RISK');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [layerDropdownOpen, setLayerDropdownOpen] = useState(false);
@@ -162,6 +173,11 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
   const [selectedStateId, setSelectedStateId] = useState<string | null>(null);
   const [stateDropdownOpen, setStateDropdownOpen] = useState(false);
   const [showLandslides] = useState(true);
+  const [teams, setTeams] = useState<RescueTeam[]>([]);
+
+  useEffect(() => {
+    getRescueTeams().then(setTeams).catch(console.error);
+  }, []);
 
   // ── Evacuation Feature State ───────────────────────────────────────────────
   const [isEvacuationMode, setIsEvacuationMode] = useState(false);
@@ -212,7 +228,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
   }, [locations, selectedLocationId, setSelectedLocationId]);
 
   // ── Build combined search corpus ───────────────────────────────────────────
-  const allDistricts = useMemo(() => getAllNERDistricts(), []);
+  const allDistricts = useMemo(() => getAllIndianDistricts(), []);
 
   interface SearchSuggestion {
     type: 'location' | 'state' | 'district';
@@ -220,7 +236,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
     label: string;
     sub: string;
     riskLevel: string;
-    data: LocationData | NERState | null;
+    data: LocationData | IndianState | null;
   }
 
   const searchSuggestions: SearchSuggestion[] = useMemo(() => {
@@ -231,9 +247,9 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
       .filter((l: LocationData) => l.name.toLowerCase().includes(q) || l.state.toLowerCase().includes(q))
       .map((l: LocationData) => ({ type: 'location', id: l.id, label: l.name, sub: l.state, riskLevel: l.riskLevel, data: l }));
 
-    const stateMatches: SearchSuggestion[] = NER_STATES
-      .filter((s: NERState) => s.name.toLowerCase().includes(q) || s.capital.toLowerCase().includes(q))
-      .map((s: NERState) => ({ type: 'state', id: s.id, label: s.name, sub: `Capital: ${s.capital}`, riskLevel: s.landslideRisk, data: s }));
+    const stateMatches: SearchSuggestion[] = INDIAN_STATES
+      .filter((s: IndianState) => s.name.toLowerCase().includes(q) || s.capital.toLowerCase().includes(q))
+      .map((s: IndianState) => ({ type: 'state', id: s.id, label: s.name, sub: `Capital: ${s.capital}`, riskLevel: s.landslideRisk, data: s }));
 
     const districtMatches: SearchSuggestion[] = allDistricts
       .filter((d: { district: string; state: string; stateId: string }) => d.district.toLowerCase().includes(q))
@@ -264,7 +280,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
   );
 
   const selectedStateData = useMemo(
-    () => NER_STATES.find((s: NERState) => s.id === selectedStateId) || null,
+    () => INDIAN_STATES.find((s: IndianState) => s.id === selectedStateId) || null,
     [selectedStateId]
   );
 
@@ -285,7 +301,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
   };
 
   const handleResetView = () => {
-    setFlyToBounds(NER_BOUNDS);
+    setFlyToBounds(INDIA_BOUNDS);
     setFlyTo(null);
     setActiveMarkerId(null);
     setSelectedStateId(null);
@@ -300,7 +316,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
   };
 
   const handleStateSelect = (stateId: string) => {
-    const state = NER_STATES.find((s: NERState) => s.id === stateId);
+    const state = INDIAN_STATES.find((s: IndianState) => s.id === stateId);
     if (state) {
       setSelectedStateId(stateId);
       setStateDropdownOpen(false);
@@ -346,7 +362,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
   const handleClearEvacuation = () => {
     setEvacuationResult(null);
     setEvacuationActiveTab('planner');
-    setFlyToBounds(NER_BOUNDS);
+    setFlyToBounds(INDIA_BOUNDS);
   };
 
   const handleStartEvacuationFromLocation = (locId: string) => {
@@ -386,7 +402,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1C2826] tracking-tight flex items-center gap-2">
-            <span>NER Live Map</span>
+            <span>India Live Map</span>
             {isEvacuationMode && (
               <span className="text-xs font-bold text-[#244A36] bg-[#244A36]/10 px-3 py-1 rounded-full uppercase border border-[#244A36]/20">
                 Safe Evacuation Active
@@ -501,7 +517,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
 
             {/* Layer dropdown + State Selector */}
             <div className="pointer-events-auto flex items-center gap-2">
-              {/* NER State Selector */}
+              {/* India State Selector */}
               <div className="relative">
                 <button
                   onClick={() => setStateDropdownOpen(!stateDropdownOpen)}
@@ -509,7 +525,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                 >
                   <CompassIcon className="w-3.5 h-3.5 text-[#244A36]" />
                   <span className="text-[#5E7E67] uppercase text-[10px] tracking-wider font-semibold">State:</span>
-                  <span>{selectedStateData?.name || 'All NER'}</span>
+                  <span>{selectedStateData?.name || 'All States'}</span>
                   <ChevronDownIcon className={`w-3.5 h-3.5 text-[#5E7E67] transition-transform ${stateDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {stateDropdownOpen && (
@@ -521,10 +537,10 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                       onClick={handleResetView}
                       className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium flex items-center justify-between transition-colors hover:bg-white/80 mb-1 border-b border-[#244A36]/10 pb-1.5"
                     >
-                      <span className="font-semibold text-[#244A36]">View All NER</span>
+                      <span className="font-semibold text-[#244A36]">View All India</span>
                       <CompassIcon className="w-3.5 h-3.5 text-[#244A36]" />
                     </button>
-                    {NER_STATES.map((state: NERState) => (
+                    {INDIAN_STATES.map((state: IndianState) => (
                       <button
                         key={state.id}
                         onClick={() => handleStateSelect(state.id)}
@@ -564,7 +580,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                     <div className="px-3 py-1.5 border-b border-[#244A36]/10 mb-1">
                       <span className="text-[10px] font-bold text-[#5E7E67] uppercase tracking-wider">GIS Layer View</span>
                     </div>
-                    {(['RISK', 'LANDSLIDES'] as const).map((layer) => (
+                    {(['RISK', 'LANDSLIDES', 'SHELTERS', 'RESCUE_TEAMS', 'SOS', 'DAMAGE'] as const).map((layer) => (
                       <button
                         key={layer}
                         onClick={() => { setActiveLayer(layer); setLayerDropdownOpen(false); }}
@@ -572,16 +588,9 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                           activeLayer === layer ? 'bg-[#244A36]/10 text-[#244A36] font-bold' : 'text-[#2B3A33] hover:bg-white/80'
                         }`}
                       >
-                        <span>{layer}</span>
+                        <span>{layer.replace('_', ' ')}</span>
                         {activeLayer === layer && <CheckIcon className="w-3.5 h-3.5 text-[#244A36]" />}
                       </button>
-                    ))}
-                    {/* Pending layers */}
-                    {(['RAINFALL', 'SLOPE', 'SATELLITE'] as const).map((layer) => (
-                      <div key={layer} className="px-3 py-2 rounded-xl text-xs flex items-center justify-between opacity-50 cursor-not-allowed select-none">
-                        <span className="text-[#2B3A33]">{layer}</span>
-                        <span className="text-[9px] bg-[#C87941]/15 text-[#C87941] px-1.5 py-0.5 rounded-full font-semibold">Pending</span>
-                      </div>
                     ))}
                     <div className="mt-1 pt-1.5 border-t border-[#244A36]/10 px-2.5 py-1 flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#C87941]" />
@@ -601,7 +610,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                 {isEvacuationMode ? (
                   <>Mode: <strong>Safe Evacuation Routing</strong></>
                 ) : (
-                  <>Layer: <strong>{activeLayer}</strong> — NER Region</>
+                  <>Layer: <strong>{activeLayer}</strong> — Pan-India</>
                 )}
               </span>
               {isEvacuationMode && evacuationResult && (
@@ -615,7 +624,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
           {/* ── Leaflet Map ────────────────────────────────────────────────── */}
           <div className="flex-1 w-full h-full" style={{ minHeight: '480px' }}>
             <MapContainer
-              bounds={NER_BOUNDS}
+              bounds={INDIA_BOUNDS}
               style={{ width: '100%', height: '100%', minHeight: '480px' }}
               zoomControl={false}
               className="rounded-3xl"
@@ -682,7 +691,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
               })}
 
               {/* ── Safe Shelters & Relief Destinations ───────────────────── */}
-              {SAFE_DESTINATIONS.map((dest: SafeLocation) => (
+              {(activeLayer === 'SHELTERS' || isEvacuationMode) && SAFE_DESTINATIONS.map((dest: SafeLocation) => (
                 <CircleMarker
                   key={dest.id}
                   center={[dest.latitude, dest.longitude]}
@@ -793,7 +802,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                           <MapPinIcon className="w-3.5 h-3.5 text-[#244A36] shrink-0" />
                           <span className="font-bold text-sm">{loc.name}</span>
                         </div>
-                        <div className="text-xs text-[#5E7E67] mb-2">{loc.state} · NER Region</div>
+                        <div className="text-xs text-[#5E7E67] mb-2">{loc.state}</div>
 
                         {/* Risk badge */}
                         <div
@@ -903,6 +912,84 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                   </CircleMarker>
                 );
               })}
+
+              {/* ── Rescue Teams Layer ────────────────────────────── */}
+              {activeLayer === 'RESCUE_TEAMS' && teams.map((team: RescueTeam) => (
+                <CircleMarker
+                  key={team.id}
+                  center={[team.currentLocation.lat, team.currentLocation.lng]}
+                  radius={9}
+                  pathOptions={{
+                    fillColor: '#34d399',
+                    fillOpacity: 0.9,
+                    color: '#065f46',
+                    weight: 2,
+                  }}
+                >
+                  <Popup className="resqai-popup" maxWidth={260}>
+                    <div className="p-1 font-sans text-[#1C2826]">
+                      <h4 className="font-bold text-xs mb-1">{team.name}</h4>
+                      <div className="text-[10px] text-[#5E7E67] mb-2">Status: {team.status}</div>
+                      <div className="text-[10px] text-[#5E7E67] mb-2">Agency: {team.agency}</div>
+                      {team.assignedIncident && (
+                        <div className="text-[10px] text-[#C87941]">Responding to: {team.assignedIncident.incidentCode}</div>
+                      )}
+                    </div>
+                  </Popup>
+                </CircleMarker>
+              ))}
+
+              {/* ── SOS Layer ────────────────────────────── */}
+              {activeLayer === 'SOS' && DEMO_SOS_REPORTS.map((sos) => (
+                <CircleMarker
+                  key={sos.id}
+                  center={[sos.lat, sos.lng]}
+                  radius={10}
+                  pathOptions={{
+                    fillColor: '#ef4444',
+                    fillOpacity: 0.9,
+                    color: '#7f1d1d',
+                    weight: 2,
+                    className: 'animate-pulse'
+                  }}
+                >
+                  <Popup className="resqai-popup" maxWidth={260}>
+                    <div className="p-1 font-sans text-[#1C2826]">
+                      <h4 className="font-bold text-xs mb-1">SOS Alert</h4>
+                      <div className="text-[10px] text-[#5E7E67] mb-1">Type: {sos.type}</div>
+                      <div className="text-[10px] text-[#5E7E67] mb-1">Severity: {sos.severity}</div>
+                      <div className="text-[10px] text-[#5E7E67] mb-1">Status: {sos.status}</div>
+                      <div className="text-[10px] text-[#5E7E67] mb-1">Reported: {sos.time}</div>
+                      <div className="text-[9px] text-[#C87941] bg-[#C87941]/10 px-2 py-1 rounded-lg mt-2">Demo Citizen Report</div>
+                    </div>
+                  </Popup>
+                </CircleMarker>
+              ))}
+
+              {/* ── Damage Layer ────────────────────────────── */}
+              {activeLayer === 'DAMAGE' && DEMO_DAMAGE_REPORTS.map((dmg) => (
+                <CircleMarker
+                  key={dmg.id}
+                  center={[dmg.lat, dmg.lng]}
+                  radius={8}
+                  pathOptions={{
+                    fillColor: '#f59e0b',
+                    fillOpacity: 0.9,
+                    color: '#b45309',
+                    weight: 2,
+                  }}
+                >
+                  <Popup className="resqai-popup" maxWidth={260}>
+                    <div className="p-1 font-sans text-[#1C2826]">
+                      <h4 className="font-bold text-xs mb-1">Damage Report</h4>
+                      <div className="text-[10px] text-[#5E7E67] mb-1">Type: {dmg.type}</div>
+                      <div className="text-[10px] text-[#5E7E67] mb-1">Status: {dmg.status}</div>
+                      <div className="text-[10px] text-[#5E7E67] mb-1">Needs: {dmg.needs}</div>
+                      <div className="text-[9px] text-[#C87941] bg-[#C87941]/10 px-2 py-1 rounded-lg mt-2">Demo Data</div>
+                    </div>
+                  </Popup>
+                </CircleMarker>
+              ))}
             </MapContainer>
           </div>
 
@@ -941,9 +1028,9 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
               <button onClick={() => handleZoom('in')} title="Zoom In" className="p-2 hover:bg-white text-[#1C2826] rounded-xl transition-colors">
                 <ZoomInIcon className="w-4 h-4" />
               </button>
-              <button onClick={handleResetView} title="View All NER" className="p-2 hover:bg-white text-[#1C2826] rounded-xl transition-colors flex items-center gap-1 text-[11px] font-bold px-2.5">
+              <button onClick={handleResetView} title="View All India" className="p-2 hover:bg-white text-[#1C2826] rounded-xl transition-colors flex items-center gap-1 text-[11px] font-bold px-2.5">
                 <CompassIcon className="w-4 h-4 text-[#244A36]" />
-                <span className="hidden sm:inline">View All NER</span>
+                <span className="hidden sm:inline">View All India</span>
               </button>
               <button onClick={() => handleZoom('out')} title="Zoom Out" className="p-2 hover:bg-white text-[#1C2826] rounded-xl transition-colors">
                 <ZoomOutIcon className="w-4 h-4" />
@@ -1034,7 +1121,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                 <div className="glass-card rounded-3xl p-5 flex flex-col gap-3">
                   <div className="flex items-start justify-between">
                     <div>
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#5E7E67] mb-0.5">{selectedStateData.code} · NER State</div>
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#5E7E67] mb-0.5">{selectedStateData.code} · India</div>
                       <h2 className="text-2xl font-bold text-[#1C2826]">{selectedStateData.name}</h2>
                       <div className="text-sm text-[#5E7E67]">Capital: <strong className="text-[#1C2826]">{selectedStateData.capital}</strong></div>
                     </div>
@@ -1068,7 +1155,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                     onClick={handleResetView}
                     className="w-full py-2 rounded-xl border border-[#244A36]/20 text-[#244A36] text-xs font-semibold hover:bg-[#244A36]/5 transition-colors"
                   >
-                    View All NER
+                    View All India
                   </button>
                 </div>
               )}
@@ -1082,7 +1169,7 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                         <MapPinIcon className="w-5 h-5 text-[#244A36]" />
                         <h2 className="text-2xl font-bold text-[#1C2826] tracking-tight">{activeLocation.name}</h2>
                       </div>
-                      <p className="text-sm font-semibold text-[#5E7E67] ml-7">{activeLocation.state} (NER Sector)</p>
+                      <p className="text-sm font-semibold text-[#5E7E67] ml-7">{activeLocation.state}</p>
                     </div>
                     <button onClick={() => { setShowMobilePanel(false); setActiveMarkerId(null); }} className="p-2 rounded-full liquid-glass text-[#1C2826] hover:bg-white lg:hidden">
                       <XIcon className="w-4 h-4" />
@@ -1187,11 +1274,11 @@ export default function LiveMap({ isLoaded: _isLoaded }: LiveMapProps) {
                 </div>
               ) : null}
 
-              {/* NER Overview Summary */}
+              {/* India Overview Summary */}
               <div className="liquid-glass rounded-3xl p-5 hidden lg:block">
                 <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#244A36]/10">
                   <h3 className="text-xs font-bold text-[#1C2826] uppercase tracking-wider flex items-center gap-2">
-                    <ZapIcon className="w-4 h-4 text-[#C87941]" /> NER Monitoring Overview
+                    <ZapIcon className="w-4 h-4 text-[#C87941]" /> Pan-India Monitoring Overview
                   </h3>
                   <span className="text-[10px] font-bold text-[#5E7E67] bg-white px-2 py-0.5 rounded-full border border-[#244A36]/10">
                     8 States

@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { useRisk } from '../context/RiskContext';
 import { 
-  NER_STATE_STATUSES, 
+  INDIAN_STATE_STATUSES, 
   AlertItem, 
   getSeverityBadgeStyle,
   getStatusBadgeStyle,
@@ -181,7 +181,7 @@ export default function Alerts() {
             Alert Management
           </h1>
           <p className="text-sm sm:text-base text-[#5E7E67] font-medium mt-1 max-w-2xl">
-            Monitor, review and manage landslide risk alerts across the North Eastern Region.
+            Monitor, review and manage landslide risk alerts across India.
           </p>
         </div>
 
@@ -556,14 +556,14 @@ export default function Alerts() {
 
         </div>
 
-        {/* RIGHT COLUMN: 9. NER REGIONAL OVERVIEW + 6. SELECTED ALERT DETAILS */}
+        {/* RIGHT COLUMN: 9. India REGIONAL OVERVIEW + 6. SELECTED ALERT DETAILS */}
         <div className="w-full lg:w-[460px] flex-shrink-0 flex flex-col gap-6">
           
-          {/* 9. NER ALERT OVERVIEW (8 STATES) */}
+          {/* 9. India ALERT OVERVIEW (8 STATES) */}
           <div className="liquid-glass rounded-3xl border border-white/60 p-6 shadow-lg shadow-[#244A36]/5">
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#244A36]/10">
               <h3 className="text-sm font-bold text-[#1C2826] flex items-center gap-2 uppercase tracking-wider">
-                <Radio className="w-4 h-4 text-[#C87941] animate-pulse" /> NER Alert Overview
+                <Radio className="w-4 h-4 text-[#C87941] animate-pulse" /> Pan-India Alert Overview
               </h3>
               <span className="text-[10px] font-bold text-[#C87941] bg-[#C87941]/10 px-2 py-0.5 rounded-full uppercase border border-[#C87941]/20">
                 Prototype Status
@@ -571,7 +571,7 @@ export default function Alerts() {
             </div>
 
             <div className="grid grid-cols-2 gap-2.5">
-              {NER_STATE_STATUSES.map(s => {
+              {INDIAN_STATE_STATUSES.map(s => {
                 const color = getStateStatusColor(s.status);
                 return (
                   <div key={s.code} className="p-2.5 glass-card rounded-2xl border border-white/60 flex items-center justify-between">

@@ -1,6 +1,6 @@
 /**
  * ResQAI — Rescue Team Data Models and Demo Datasets
- * Designed for emergency field operations, dispatching, and live tracking across NER India.
+ * Designed for emergency field operations, dispatching, and live tracking across India India.
  */
 
 export type RescueTeamStatus = 'Available' | 'En Route' | 'On Site' | 'Completed';

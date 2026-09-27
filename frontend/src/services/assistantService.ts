@@ -37,7 +37,7 @@ export function getInitialGreeting(): ChatMessage {
     sender: 'assistant',
     text: `Hello! I am the **ResQAI Disaster Assistant**.
 
-I am your project-focused assistant for landslide risk monitoring, early warning indicators, and disaster preparedness across **Northeast India**.
+I am your project-focused assistant for disaster & landslide risk monitoring, early warning indicators, and disaster preparedness across **India**.
 
 How can I help you today? You can choose from the suggested questions below or ask about any geotechnical factor, risk level, or safety precaution.`,
     timestamp: getFormattedTime(),

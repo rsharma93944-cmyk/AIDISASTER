@@ -13,12 +13,12 @@ export const ASSISTANT_KNOWLEDGE_BASE: KnowledgeItem[] = [
     id: 'rainfall-risk',
     keywords: ['rainfall', 'rain', 'precipitation', 'monsoon', 'water', 'saturation', 'pore pressure', 'soil moisture'],
     title: 'Rainfall & Pore-Water Saturation',
-    response: `**Rainfall is the primary triggering factor for landslides in Northeast India.**
+    response: `**Rainfall is the primary triggering factor for landslides in India.**
 
 When prolonged or intense monsoon precipitation occurs:
 1. **Soil Saturation:** Rain infiltrates the topsoil, increasing unit weight and pore-water pressure.
 2. **Shear Strength Reduction:** The elevated pore pressure reduces the effective normal stress between soil particles, drastically lowering the slope's shear resistance.
-3. **Threshold Exceedance:** In the NER Himalayan belt, cumulative 24-hour rainfall exceeding **120–140 mm** or 72-hour cumulative precipitation exceeding **250 mm** triggers critical slope instability.
+3. **Threshold Exceedance:** In the India Himalayan belt, cumulative 24-hour rainfall exceeding **120–140 mm** or 72-hour cumulative precipitation exceeding **250 mm** triggers critical slope instability.
 
 *Tip: In ResQAI's multi-parametric risk engine, rainfall carries a 30% analytical weighting.*`,
     quickActions: [
@@ -127,7 +127,7 @@ Key aspects of the vision pipeline:
       'call emergency', 'call police', 'call ambulance', 'call ndrf', 'disaster helpline',
       'phone number', 'contact number', 'ndma number', 'sdma number', 'police number'
     ],
-    title: 'Verified Disaster & Emergency Helplines (India & NER)',
+    title: 'Verified Disaster & Emergency Helplines (India & India)',
     response: `**Official Verified Emergency & Disaster Helplines:**
 
 🚨 **National Unified Emergency:**
@@ -144,7 +144,7 @@ Key aspects of the vision pipeline:
 - **100 / 112** — Police Emergency
 - **101** — Fire & Rescue Service
 
-📍 **Northeast State Disaster Control Rooms (Direct Landlines):**
+📍 **India State Disaster Control Rooms (Direct Landlines):**
 - **Assam (ASDMA):** \`0361-2237000\` / \`1070\`
 - **Sikkim (SSDMA):** \`03592-202410\` / \`1070\`
 - **Meghalaya (MSDMA):** \`0364-2226571\` / \`1070\`
@@ -219,16 +219,16 @@ Key aspects of the vision pipeline:
   {
     id: 'ner-geology',
     keywords: ['ner', 'northeast', 'northeast india', 'sikkim', 'assam', 'meghalaya', 'arunachal', 'mizoram', 'manipur', 'nagaland', 'tripura'],
-    title: 'Northeast Region (NER) Landslide Vulnerability',
-    response: `**The North Eastern Region of India is among the world's most landslide-vulnerable landscapes.**
+    title: 'Pan-India Landslide Vulnerability',
+    response: `**India contains some of the world's most landslide-vulnerable landscapes.**
 
 **Vulnerability Drivers:**
 - **Active Himalayan Tectonics:** Young, fragile, and seismically active mountain formations (Zone V).
 - **Extreme Monsoon Deluges:** Areas like Cherrapunji, Mawsynram, and South Sikkim receive over 3,000–10,000 mm of annual rainfall.
 - **Steep Unstable Slopes:** High relief topography with heavy weathering and fragile overburden along critical transit corridors.
-- **ResQAI Focus:** Covering all 8 NER states (Arunachal Pradesh, Assam, Manipur, Meghalaya, Mizoram, Nagaland, Sikkim, Tripura) with focused spatial monitoring.`,
+- **ResQAI Focus:** Covering states across India with focused spatial monitoring.`,
     quickActions: [
-      { label: 'Explore NER Live Map', action: 'navigate', path: '/live-map' },
+      { label: 'Explore India Live Map', action: 'navigate', path: '/live-map' },
       { label: 'View Regional Alerts', action: 'navigate', path: '/alerts' }
     ],
     suggestedFollowUps: [
@@ -270,11 +270,11 @@ export const SUGGESTED_QUESTIONS = [
   'What is YOLO11 used for in ResQAI?'
 ];
 
-export const OUT_OF_SCOPE_FALLBACK = `I’m **ResQAI Disaster Assistant**. I’m designed specifically to help with landslide risk analysis, early warning systems, geotechnical factors, disaster preparedness, and ResQAI features across Northeast India.
+export const OUT_OF_SCOPE_FALLBACK = `I’m **ResQAI Disaster Assistant**. I’m designed specifically to help with landslide risk analysis, early warning systems, geotechnical factors, disaster preparedness, and ResQAI features across India.
 
 You can ask me about:
 - **Rainfall & pore-water triggers**
 - **Slope stability & soil factors**
 - **Safety precautions during warnings**
 - **How ResQAI & YOLO11 detect landslides**
-- **Current monitoring context for Northeast India**`;
+- **Current monitoring context for India**`;

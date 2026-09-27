@@ -1,5 +1,5 @@
 /**
- * ResQAI Prototype Landslide Dataset — Northeast India
+ * ResQAI Prototype Landslide Dataset — India
  *
  * ⚠️  PROTOTYPE / DEMO DATA
  * These records are illustrative scenario data for the ResQAI prototype.

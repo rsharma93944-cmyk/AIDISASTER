@@ -63,7 +63,7 @@ export default function Footer() {
               <p className="brand-name">ResQAI</p>
             </div>
             <p className="brand-blurb">
-              AI-powered Landslide Early Warning &amp; Risk Monitoring System for the North Eastern Region of India. Nature warns. We act.
+              AI-powered Disaster &amp; Landslide Early Warning System for India. Nature warns. We act.
             </p>
             <ul className="contact-list">
               <li>
@@ -82,7 +82,7 @@ export default function Footer() {
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
                 </svg>
-                <span>NER Disaster Operations Hub, Guwahati, India</span>
+                <span>India Disaster Operations Hub, Guwahati, India</span>
               </li>
             </ul>
           </div>
@@ -178,7 +178,7 @@ export default function Footer() {
             </a>
           </div>
           <nav className="legal" aria-label="Legal">
-            <a href="#privacy" onClick={(e) => { e.preventDefault(); alert('ResQAI Telemetry & Data Privacy Policy (NER Geospatial Protocol)'); }}>Data Privacy Policy</a>
+            <a href="#privacy" onClick={(e) => { e.preventDefault(); alert('ResQAI Telemetry & Data Privacy Policy (India Geospatial Protocol)'); }}>Data Privacy Policy</a>
             <a href="#terms" onClick={(e) => { e.preventDefault(); alert('ResQAI Terms of Service & Standard Operating Procedures'); }}>Standard Operating Procedures</a>
             <a href="#disclaimer" onClick={(e) => { e.preventDefault(); alert('Disclaimer: Prototype AI Early Warning Decision Support System'); }}>Prototype Disclaimer</a>
           </nav>

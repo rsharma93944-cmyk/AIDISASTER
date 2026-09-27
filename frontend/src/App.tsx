@@ -41,8 +41,8 @@ const mapContainerStyle = {
 };
 
 const mapCenter = {
-  lat: 26.2006,
-  lng: 92.9376 // Center of North Eastern Region
+  lat: 22.5937,
+  lng: 78.9629 // Center of India
 };
 
 const mapOptions = {
@@ -136,8 +136,7 @@ function AppContent() {
     { id: 'live-map', label: 'Live Map', badge: 'Live', path: '/live-map' },
     { id: 'risk-monitoring', label: 'Risk Monitoring', path: '/risk-monitoring' },
     { id: 'alerts', label: 'Alerts', count: activeAlertsCount > 0 ? activeAlertsCount : undefined, path: '/alerts' },
-    { id: 'rescue-team', label: 'Rescue Team', path: '/rescue-team' },
-    { id: 'analysis', label: 'Analysis', path: '/analysis' },
+    { id: 'analysis', label: 'AI Analysis', path: '/analysis' },
     { id: 'assistant', label: 'Assistant', path: '/assistant' },
     { id: 'risk-simulator', label: 'Simulator', path: '/risk-simulator' },
   ];
@@ -464,15 +463,7 @@ function AppContent() {
                 </button>
               )}
 
-              {/* Monitor Risk Primary Button */}
-              <button
-                type="button"
-                onClick={() => navigateTo('/risk-monitoring')}
-                className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#244A36] text-[#FAF7F2] text-[12.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-[#1B3828] active:scale-[0.98] transition-all duration-200 shadow-[0_2px_8px_rgba(36,74,54,0.22)] border border-[#2E5A44]/30"
-              >
-                <Activity className="w-3.5 h-3.5 text-[#A3C7AD]" />
-                <span>Monitor Risk</span>
-              </button>
+
 
               {/* Mobile Hamburger Toggle */}
               <button
@@ -691,13 +682,13 @@ function AppContent() {
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-bold text-[#1C2826] tracking-tight leading-[1.12] mb-2.5 md:mb-3 font-sans">
-              AI-powered landslide <br className="hidden sm:inline" />
-              <span className="text-[#244A36]">early warning</span> for Northeast India
+              AI-powered disaster & landslide <br className="hidden sm:inline" />
+              <span className="text-[#244A36]">early warning</span> for India
             </h1>
 
             {/* Supporting Micro-Copy */}
             <p className="text-sm sm:text-base text-[#3A4D43] leading-relaxed max-w-xl mb-4 md:mb-5 font-medium">
-              Continuous real-time geotechnical telemetry, InSAR displacement tracking, and physics-informed AI modeling to safeguard arterial mountain corridors and vulnerable hill settlements.
+              AI-driven risk monitoring, early warning and response support for vulnerable regions across India.
             </p>
 
             {/* Action Button Row */}
@@ -728,11 +719,11 @@ function AppContent() {
             <div className="bg-[#FAF7F2]/80 backdrop-blur-md border border-[#244A36]/12 px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-2.5">
               <span className="flex items-center gap-1.5 font-medium text-[11.5px]">
                 <span className="w-2 h-2 rounded-full bg-[#526E48] animate-pulse" />
-                Northeast Early Warning Grid
+                India Early Warning Grid
               </span>
               <span className="h-3 w-px bg-[#244A36]/15" />
               <span className="hidden sm:inline text-[11.5px] text-[#5E7E67]">
-                Assam • Sikkim • Meghalaya • Arunachal • Mizoram
+                Uttarakhand • Kerala • Maharashtra • Himachal Pradesh • Sikkim • Assam
               </span>
               <button
                 onClick={() => navigateTo('/live-map', 'live-map')}
@@ -845,7 +836,7 @@ function AppContent() {
                 RISK EVALUATION
               </h3>
               <p className="text-[11.5px] text-[#5E7E67] font-medium leading-relaxed">
-                Multi-factor risk score generation for monitored NER corridors & communities
+                Multi-factor risk score generation for monitored India corridors & communities
               </p>
             </div>
 
@@ -877,7 +868,7 @@ function AppContent() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 2 — NER RISK OVERVIEW                                               */}
+      {/* SECTION 2 — India RISK OVERVIEW                                               */}
       {/* ========================================================================= */}
       <section
         id="ner-risk-overview"
@@ -897,10 +888,10 @@ function AppContent() {
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C2826] tracking-tight mb-1 font-sans">
-                NER Risk Overview
+                India Risk Overview
               </h2>
               <p className="text-xs sm:text-sm text-[#5E7E67] max-w-xl font-medium">
-                North Eastern Region environmental monitoring grid & live telemetry stations.
+                Pan-India environmental monitoring grid & live telemetry stations.
               </p>
             </div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass border border-[#C87941]/30 shadow-sm">
@@ -961,7 +952,7 @@ function AppContent() {
             <div className="lg:col-span-4 liquid-glass rounded-3xl p-4 sm:p-5 flex flex-col gap-4 border border-white/80 shadow-xl shadow-[#244A36]/8">
               <div>
                 <h3 className="text-xs sm:text-[13px] font-bold text-[#1C2826] uppercase mb-2.5 tracking-wider">
-                  8 NER States Monitored
+                  Indian States Monitored
                 </h3>
                 <div className="grid grid-cols-2 gap-1.5 text-xs text-[#5E7E67] font-medium">
                   {['Arunachal Pradesh', 'Assam', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Sikkim', 'Tripura'].map(state => (
@@ -1043,7 +1034,7 @@ function AppContent() {
                 Mountain Terrain Vulnerability
               </h3>
               <p className="text-xs sm:text-[13px] text-[#5E7E67] leading-relaxed font-medium">
-                The North Eastern Region contains mountainous and landslide-prone areas where heavy monsoons, steep slopes, and seismic activity create sudden slope failures along critical transport corridors.
+                India contains numerous mountainous and landslide-prone areas where heavy monsoons, steep slopes, and seismic activity create sudden slope failures along critical transport corridors.
               </p>
             </div>
 
@@ -1120,7 +1111,7 @@ function AppContent() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-[#1C2826]">
-                    {activeModal === 'live-map' && 'Northeast India 3D GIS Landslide Radar'}
+                    {activeModal === 'live-map' && 'India 3D GIS Landslide Radar'}
                     {activeModal === 'risk-monitoring' && 'Real-Time Sensor Telemetry Hub'}
                     {activeModal === 'alerts' && 'Early Warning Bulletin & Hazard Advisories'}
                     {activeModal === 'analysis' && 'AI Predictive Modeling & Slope Stability'}
@@ -1262,7 +1253,7 @@ function AppContent() {
                     <div className="bg-[#244A36] h-full w-[98.4%]" />
                   </div>
                   <p className="text-xs text-[#5E7E67]">
-                    Trained on 25+ years of Geological Survey of India (GSI) landslide inventory data across Northeast Himalayan terrains.
+                    Trained on 25+ years of Geological Survey of India (GSI) landslide inventory data across India's vulnerable terrains.
                   </p>
                 </div>
 
@@ -1298,7 +1289,7 @@ function AppContent() {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-[#1C2826]">
-                    Northeast Sector Telemetry Scan Active
+                    Pan-India Telemetry Scan Active
                   </h4>
                   <p className="text-xs text-[#5E7E67] mt-1 max-w-md mx-auto">
                     Polling 148 IoT nodes across 8 states. All critical arterial highways (NH-10, NH-29, NH-51) currently within safe operating thresholds.

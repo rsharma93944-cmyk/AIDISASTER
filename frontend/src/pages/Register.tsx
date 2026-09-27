@@ -5,15 +5,15 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const NER_STATES = [
-  'Arunachal Pradesh',
-  'Assam',
-  'Manipur',
-  'Meghalaya',
-  'Mizoram',
-  'Nagaland',
-  'Sikkim',
-  'Tripura'
+const INDIAN_STATES = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+  'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand',
+  'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
+  'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
+  'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+  'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+  'Jammu & Kashmir', 'Ladakh', 'Delhi', 'Chandigarh',
+  'Andaman & Nicobar Islands', 'Puducherry',
 ];
 
 export default function Register() {
@@ -23,7 +23,7 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [preferredRegion, setPreferredRegion] = useState(NER_STATES[0]);
+  const [preferredRegion, setPreferredRegion] = useState(INDIAN_STATES[0]);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -157,10 +157,10 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Preferred Region (8 NER States) */}
+          {/* Preferred Region (Indian States) */}
           <div>
             <label className="block text-[11px] font-bold uppercase tracking-wider text-[#5E7E67] mb-1.5">
-              Primary Monitoring Region (NER)
+              Primary Monitoring Region
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5E7E67]">
@@ -171,7 +171,7 @@ export default function Register() {
                 onChange={(e) => setPreferredRegion(e.target.value)}
                 className="w-full pl-10 pr-10 py-2.5 bg-white/80 backdrop-blur-md border border-white/70 rounded-2xl text-sm text-[#1C2826] focus:outline-none focus:ring-2 focus:ring-[#244A36]/20 focus:border-[#244A36]/40 appearance-none cursor-pointer shadow-inner"
               >
-                {NER_STATES.map(st => (
+                {INDIAN_STATES.map(st => (
                   <option key={st} value={st}>{st}</option>
                 ))}
               </select>
@@ -230,7 +230,7 @@ export default function Register() {
                 className="w-4 h-4 mt-0.5 rounded text-[#244A36] focus:ring-[#244A36] border-[#244A36]/20 flex-shrink-0 cursor-pointer"
               />
               <span className="text-xs text-[#3A4D43] leading-snug font-medium">
-                I agree to use ResQAI for disaster-risk monitoring and early warning purposes across the North Eastern Region.
+                I agree to use ResQAI for disaster-risk monitoring and early warning purposes across India.
               </span>
             </label>
           </div>

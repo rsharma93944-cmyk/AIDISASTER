@@ -107,7 +107,7 @@ export default function EmergencyContactsModal({
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-[#5E7E67] font-medium mt-0.5">
-                Official emergency numbers and State Disaster Management Control Rooms across Northeast India.
+                Official emergency numbers and State Disaster Management Control Rooms across India.
               </p>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function EmergencyContactsModal({
               { id: 'MEDICAL', label: 'Ambulance' },
               { id: 'POLICE', label: 'Police' },
               { id: 'FIRE', label: 'Fire & Rescue' },
-              { id: 'REGIONAL', label: 'NER States' },
+              { id: 'REGIONAL', label: 'India States' },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -207,12 +207,12 @@ export default function EmergencyContactsModal({
             {/* State Select */}
             {(activeTab === 'ALL' || activeTab === 'REGIONAL' || activeTab === 'DISASTER') && (
               <select
-                aria-label="Filter by NER state"
+                aria-label="Filter by India state"
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
                 className="bg-white/80 backdrop-blur-md border border-white/80 rounded-xl text-xs text-[#1C2826] font-semibold px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#244A36]/20 shadow-inner cursor-pointer"
               >
-                <option value="ALL">All 8 NER States</option>
+                <option value="ALL">All Indian States</option>
                 {NER_STATE_HELPLINES.map((s) => (
                   <option key={s.code} value={s.state}>
                     {s.state}
@@ -311,14 +311,14 @@ export default function EmergencyContactsModal({
             </div>
           )}
 
-          {/* Section 2: Regional NER State Disaster Control Rooms */}
+          {/* Section 2: Regional State Disaster Control Rooms */}
           {filteredRegionalHelplines.length > 0 && (
             <div className="space-y-3 pt-2">
               <div className="flex items-center justify-between px-1">
                 <span className="text-[11px] font-bold text-[#5E7E67] uppercase tracking-wider">
-                  Northeast State Disaster Control Rooms (SEOC)
+                  India State Disaster Control Rooms (SEOC)
                 </span>
-                <span className="text-[10px] text-[#C87941] font-semibold">8 NER State Nodes</span>
+                <span className="text-[10px] text-[#C87941] font-semibold">Indian State Nodes</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">

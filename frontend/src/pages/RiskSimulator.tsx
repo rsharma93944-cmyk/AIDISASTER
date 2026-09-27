@@ -255,7 +255,7 @@ export default function RiskSimulator() {
           What-If Risk Simulator
         </h1>
         <p className="text-sm text-[#3A4D43] max-w-2xl leading-relaxed">
-          Explore how changing environmental conditions may affect landslide risk for a selected Northeast India location.
+          Explore how changing environmental conditions may affect landslide risk for a selected location across India.
           Adjust the sliders and simulate a scenario to compare risk outcomes.
         </p>
       </div>

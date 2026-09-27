@@ -351,7 +351,7 @@ export default function RescueTeamPage() {
             </span>
           </div>
           <div className="mt-2 text-[11.5px] text-[#5E7E67] font-medium">
-            Equipped for rapid deployment in NER sector
+            Equipped for rapid deployment across India
           </div>
         </div>
 
@@ -920,7 +920,7 @@ export default function RescueTeamPage() {
               <div className="mb-5 p-4 rounded-2xl bg-white/70 border border-[#244A36]/15 text-center text-[#5E7E67]">
                 <Shield className="w-6 h-6 mx-auto mb-1 text-[#244A36]" />
                 <p className="text-xs font-bold text-[#1C2826]">Team Alpha is currently in Standby</p>
-                <p className="text-[11px] mt-0.5">Ready for immediate dispatch to any high risk zone in NER.</p>
+                <p className="text-[11px] mt-0.5">Ready for immediate dispatch to any high risk zone across India.</p>
                 <button
                   type="button"
                   onClick={() => {

@@ -211,7 +211,7 @@ export default function Assistant() {
             <div className="space-y-2.5">
               <div className="flex justify-between items-center">
                 <span className="text-[11px] text-[#5E7E67] font-medium">Region</span>
-                <span className="text-[11px] font-bold text-[#244A36]">Northeast India</span>
+                <span className="text-[11px] font-bold text-[#244A36]">Pan-India</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[11px] text-[#5E7E67] font-medium">Priority Zone</span>

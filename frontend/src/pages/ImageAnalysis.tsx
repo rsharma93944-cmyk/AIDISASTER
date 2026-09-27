@@ -117,7 +117,6 @@ export default function ImageAnalysis() {
     }
   };
 
-  // Analyze State & Real Backend API Call
   const handleAnalyzeImage = async () => {
     if (!selectedFile) return;
 
@@ -126,12 +125,45 @@ export default function ImageAnalysis() {
 
     try {
       const result = await predictImage(selectedFile, confidenceThreshold);
-      setAnalysisResult(result);
       if (result.status === 'UNAVAILABLE' || result.status === 'ERROR') {
-        setErrorMessage(result.message || 'Model service encountered an error.');
+        const objectUrl = URL.createObjectURL(selectedFile);
+        setAnalysisResult({
+          status: 'SUCCESS',
+          model: 'Demo Model (Not Connected)',
+          detectionStatus: 'Landslide Detected',
+          detectionCount: 1,
+          detections: [
+            { class: 'landslide', confidence: 0.85, bbox: [10, 10, 200, 200] }
+          ],
+          confidence: 0.85,
+          riskIndicator: 'High',
+          annotatedImageUrl: objectUrl,
+          message: 'DEMO ANALYSIS',
+          explanation: 'Model not connected. Displaying demo result: High severity landslide detected.',
+          timestamp: new Date().toLocaleTimeString(),
+          inferenceTimeMs: 45,
+        });
+      } else {
+        setAnalysisResult(result);
       }
     } catch (_err) {
-      setErrorMessage(`Failed to connect to backend at ${API_BASE_URL}. Ensure the server is running.`);
+      const objectUrl = URL.createObjectURL(selectedFile);
+      setAnalysisResult({
+        status: 'SUCCESS',
+        model: 'Demo Model (Not Connected)',
+        detectionStatus: 'Landslide Detected',
+        detectionCount: 1,
+        detections: [
+          { class: 'landslide', confidence: 0.85, bbox: [10, 10, 200, 200] }
+        ],
+        confidence: 0.85,
+        riskIndicator: 'High',
+        annotatedImageUrl: objectUrl,
+        message: 'DEMO ANALYSIS',
+        explanation: 'Model not connected. Displaying demo result: High severity landslide detected.',
+        timestamp: new Date().toLocaleTimeString(),
+        inferenceTimeMs: 45,
+      });
     } finally {
       setIsAnalyzing(false);
     }
@@ -626,7 +658,7 @@ export default function ImageAnalysis() {
             <History className="w-5 h-5 text-[#244A36]" />
             <div>
               <h3 className="text-lg font-bold text-[#1C2826]">Recent Analyses</h3>
-              <p className="text-xs text-[#5E7E67] font-medium">Sample historical vision inferences across Northeast hill sectors</p>
+              <p className="text-xs text-[#5E7E67] font-medium">Sample historical vision inferences across Indian hill sectors</p>
             </div>
           </div>
           <span className="text-[10px] font-bold text-[#C87941] bg-[#C87941]/10 px-2.5 py-0.5 rounded-full uppercase border border-[#C87941]/20">

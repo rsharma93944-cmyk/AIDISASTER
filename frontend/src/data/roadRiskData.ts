@@ -1,6 +1,6 @@
 /**
  * ResQAI — Road Risk & Landslide Vulnerability Corridors
- * Centralized dataset representing road segments, mountain cuts, and hazard zones across the North Eastern Region.
+ * Centralized dataset representing road segments, mountain cuts, and hazard zones across India.
  *
  * Designed to be backend-ready (consumable via GET /api/road-risk).
  */

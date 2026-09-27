@@ -1,6 +1,6 @@
 /**
  * ResQAI — Designated & Prototype Safe Evacuation Destinations
- * Centralized dataset for emergency shelters, relief centres, and staging grounds across NER India.
+ * Centralized dataset for emergency shelters, relief centres, and staging grounds across India India.
  *
  * NOTE:
  * Unless officially verified by state DDMA / NDMA, these destinations are labelled as

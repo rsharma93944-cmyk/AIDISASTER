@@ -29,7 +29,7 @@ export const INITIAL_PROTOTYPE_ALERTS: AlertItem[] = Object.values(RAW_LOCATIONS
   .filter((alert): alert is AlertItem => alert !== null)
   .map((alert) => {
     // Preserve initial prototype statuses for realistic operational UI demonstration
-    if (alert.locationId === 'itanagar' || alert.locationId === 'shillong') {
+    if (alert.locationId === 'mumbai' || alert.locationId === 'shimla') {
       return {
         ...alert,
         status: 'RESOLVED' as AlertStatus,
@@ -53,15 +53,19 @@ export const INITIAL_PROTOTYPE_ALERTS: AlertItem[] = Object.values(RAW_LOCATIONS
     return b.riskScore - a.riskScore;
   });
 
-export const NER_STATE_STATUSES: StateAlertStatus[] = [
-  { state: 'Arunachal Pradesh', code: 'AR', status: 'Monitoring', activeAlertCount: 0 },
-  { state: 'Assam', code: 'AS', status: 'Elevated', activeAlertCount: 1 },
-  { state: 'Manipur', code: 'MN', status: 'Normal', activeAlertCount: 0 },
-  { state: 'Meghalaya', code: 'ML', status: 'Normal', activeAlertCount: 0 },
-  { state: 'Mizoram', code: 'MZ', status: 'High Risk', activeAlertCount: 1 },
-  { state: 'Nagaland', code: 'NL', status: 'Elevated', activeAlertCount: 1 },
+export const INDIAN_STATE_STATUSES: StateAlertStatus[] = [
+  { state: 'Uttarakhand', code: 'UK', status: 'High Risk', activeAlertCount: 2 },
+  { state: 'Himachal Pradesh', code: 'HP', status: 'High Risk', activeAlertCount: 1 },
+  { state: 'Kerala', code: 'KL', status: 'Elevated', activeAlertCount: 1 },
   { state: 'Sikkim', code: 'SK', status: 'High Risk', activeAlertCount: 1 },
-  { state: 'Tripura', code: 'TR', status: 'Normal', activeAlertCount: 0 }
+  { state: 'Maharashtra', code: 'MH', status: 'Monitoring', activeAlertCount: 0 },
+  { state: 'Assam', code: 'AS', status: 'Elevated', activeAlertCount: 1 },
+  { state: 'Arunachal Pradesh', code: 'AR', status: 'Monitoring', activeAlertCount: 0 },
+  { state: 'Tamil Nadu', code: 'TN', status: 'Normal', activeAlertCount: 0 },
+  { state: 'West Bengal', code: 'WB', status: 'Monitoring', activeAlertCount: 0 },
+  { state: 'Jammu & Kashmir', code: 'JK', status: 'Elevated', activeAlertCount: 1 },
+  { state: 'Meghalaya', code: 'ML', status: 'Normal', activeAlertCount: 0 },
+  { state: 'Karnataka', code: 'KA', status: 'Normal', activeAlertCount: 0 },
 ];
 
 export const getSeverityBadgeStyle = (severity: AlertSeverity): { bg: string; text: string; border: string; dot: string } => {

@@ -25,7 +25,7 @@ export const DEFAULT_DEMO_USER: User = {
   id: 'usr-demo-001',
   name: 'ResQAI Demo User',
   email: 'demo@resqai.app',
-  preferredRegion: 'Northeast India (NER)',
+  preferredRegion: 'India',
   accountType: 'Demo User',
   memberSince: 'September 2026',
   preferences: {
@@ -67,7 +67,7 @@ export async function registerUser(name: string, email: string, preferredRegion:
     id: `usr-${Date.now().toString(36)}`,
     name: name.trim(),
     email: email.trim().toLowerCase(),
-    preferredRegion: preferredRegion || 'Northeast India (NER)',
+    preferredRegion: preferredRegion || 'India',
     accountType: 'Registered User',
     memberSince: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
     preferences: {

@@ -87,7 +87,7 @@ export default function RiskMonitoring({ initialLocationId }: RiskMonitoringProp
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass border border-[#C87941]/25 mb-3">
             <span className="w-2 h-2 rounded-full bg-[#C87941] animate-pulse" />
             <span className="text-[11px] font-bold tracking-[0.1em] uppercase text-[#C87941]">
-              Prototype Risk Engine
+              Prototype Risk Engine (DEMO DATA)
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#1C2826] tracking-tight">
@@ -137,7 +137,7 @@ export default function RiskMonitoring({ initialLocationId }: RiskMonitoringProp
               >
                 <div className="px-4 py-2 border-b border-[#244A36]/10 mb-1 flex items-center justify-between">
                   <span className="text-[10px] font-bold text-[#5E7E67] uppercase tracking-wider">8 Prototype Locations</span>
-                  <span className="text-[9px] font-semibold text-[#C87941] bg-[#C87941]/10 px-2 py-0.5 rounded-full">NER Sector</span>
+                  <span className="text-[9px] font-semibold text-[#C87941] bg-[#C87941]/10 px-2 py-0.5 rounded-full">Pan-India</span>
                 </div>
                 {Object.values(riskDataMap).map((loc) => {
                   const isCur = loc.id === data.id;

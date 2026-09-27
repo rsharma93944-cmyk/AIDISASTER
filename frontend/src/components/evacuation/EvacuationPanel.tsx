@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { SAFE_DESTINATIONS, SafeLocation, getSafeDestinationsByState } from '../../data/safeLocations';
 import { MapLocationData } from '../../services/riskCalculationService';
-import { NER_STATES, NERState } from '../../data/nerStates';
+import { INDIAN_STATES, IndianState } from '../../data/indianStates';
 import { EvacuationCalculationResult, RouteCoordinate } from '../../services/routeService';
 
 export interface StartLocationOption {
@@ -226,7 +226,7 @@ export default function EvacuationPanel({
                 onMouseLeave={() => setStartDropdownOpen(false)}
               >
                 <div className="px-3 py-1.5 text-[10px] font-bold text-[#5E7E67] uppercase tracking-wider border-b border-[#244A36]/10">
-                  NER Monitored Locations
+                  India Monitored Locations
                 </div>
                 {locations.map((loc: MapLocationData) => (
                   <button
@@ -321,9 +321,9 @@ export default function EvacuationPanel({
                     : 'bg-white/60 text-[#3A4D43] hover:bg-white'
                 }`}
               >
-                All NER
+                All India
               </button>
-              {NER_STATES.map((s: NERState) => (
+              {INDIAN_STATES.map((s: IndianState) => (
                 <button
                   key={s.id}
                   type="button"

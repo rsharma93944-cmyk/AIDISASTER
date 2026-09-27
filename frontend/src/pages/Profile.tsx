@@ -8,23 +8,22 @@ import { useAuth } from '../context/AuthContext';
 import { UserPreferences } from '../services/authService';
 import EmergencyContactsModal from '../components/EmergencyContactsModal';
 
-const NER_STATES = [
-  'Arunachal Pradesh',
-  'Assam',
-  'Manipur',
-  'Meghalaya',
-  'Mizoram',
-  'Nagaland',
-  'Sikkim',
-  'Tripura',
-  'Northeast India (NER)'
+const INDIAN_STATES = [
+  'All India',
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+  'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand',
+  'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
+  'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
+  'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+  'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+  'Jammu & Kashmir', 'Ladakh', 'Delhi', 'Chandigarh',
 ];
 
 export default function Profile() {
   const { user, updatePreferences, updateProfile, logout } = useAuth();
 
   const [name, setName] = useState(user?.name || '');
-  const [preferredRegion, setPreferredRegion] = useState(user?.preferredRegion || 'Northeast India (NER)');
+  const [preferredRegion, setPreferredRegion] = useState(user?.preferredRegion || 'India');
   const [preferences, setPreferences] = useState<UserPreferences>(user?.preferences || {
     severeAlerts: true,
     highRiskAlerts: true,
@@ -131,7 +130,7 @@ export default function Profile() {
                 <span>{user?.email || 'demo@resqai.app'}</span>
                 <span>•</span>
                 <MapPin className="w-3.5 h-3.5 text-[#244A36]" />
-                <span>{user?.preferredRegion || 'Northeast India'}</span>
+                <span>{user?.preferredRegion || 'India'}</span>
               </p>
             </div>
           </div>
@@ -219,7 +218,7 @@ export default function Profile() {
                   onChange={(e) => setPreferredRegion(e.target.value)}
                   className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-md border border-white/70 rounded-2xl text-sm text-[#1C2826] focus:outline-none focus:ring-2 focus:ring-[#244A36]/20 cursor-pointer shadow-inner"
                 >
-                  {NER_STATES.map(s => (
+                  {INDIAN_STATES.map(s => (
                     <option key={s} value={s}>{s}</option>
                   ))}
                 </select>
@@ -314,7 +313,7 @@ export default function Profile() {
                 <div className="flex items-start gap-3">
                   <Layers className="w-5 h-5 text-[#526E48] mt-0.5 flex-shrink-0" />
                   <div>
-                    <span className="text-xs font-bold text-[#1C2826] block">Regional NER Bulletins</span>
+                    <span className="text-xs font-bold text-[#1C2826] block">Regional Bulletins</span>
                     <span className="text-[11px] text-[#5E7E67] font-medium">Daily synthesized geotechnical status across all 8 states</span>
                   </div>
                 </div>
@@ -359,7 +358,7 @@ export default function Profile() {
               </span>
             </div>
             <p className="text-xs text-[#5E7E67] font-medium mt-0.5 max-w-2xl leading-relaxed">
-              Immediate access to National Emergency (112), Disaster Management (1070/1077), NDRF, Medical Ambulance (108), and all 8 North Eastern state control rooms.
+              Immediate access to National Emergency (112), Disaster Management (1070/1077), NDRF, Medical Ambulance (108), and state control rooms across India.
             </p>
           </div>
         </div>

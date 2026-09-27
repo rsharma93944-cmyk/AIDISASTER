@@ -166,7 +166,7 @@ export default function Login() {
             Welcome Back
           </h2>
           <p className="text-xs text-[#5E7E67] font-medium mt-1.5 leading-relaxed max-w-xs mx-auto">
-            Sign in to monitor landslide risks, alerts and analyses across Northeast India.
+            Sign in to monitor disaster risks, alerts and analyses across India.
           </p>
         </div>
 
