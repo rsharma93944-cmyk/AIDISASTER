@@ -9,7 +9,7 @@
 [![AI](https://img.shields.io/badge/AI-Landslide%20Risk-0EA5E9?style=flat-square)](#)
 [![GIS](https://img.shields.io/badge/GIS-Spatial%20Intelligence-10B981?style=flat-square)](#)
 [![YOLO11](https://img.shields.io/badge/Computer%20Vision-YOLO11-F59E0B?style=flat-square)](#)
-[![NER](https://img.shields.io/badge/Focus-Northeast%20India-6366F1?style=flat-square)](#)
+[![INDIA](https://img.shields.io/badge/Focus-Pan--India-6366F1?style=flat-square)](#)
 
 ---
 
