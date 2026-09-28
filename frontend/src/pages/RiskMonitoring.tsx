@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useRisk } from '../context/RiskContext';
 import { ComputedRiskFactor } from '../services/riskCalculationService';
+import { useTranslation } from 'react-i18next';
 
 interface RiskMonitoringProps {
   initialLocationId?: string;
@@ -21,6 +22,7 @@ export default function RiskMonitoring({ initialLocationId }: RiskMonitoringProp
     getRiskColor, 
     getIndicatorBadge 
   } = useRisk();
+  const { t } = useTranslation();
 
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
@@ -91,10 +93,10 @@ export default function RiskMonitoring({ initialLocationId }: RiskMonitoringProp
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#1C2826] tracking-tight">
-            Risk Monitoring
+            {t('nav.riskMonitoring', 'Risk Monitoring')}
           </h1>
           <p className="text-sm sm:text-base text-[#5E7E67] font-medium mt-1 max-w-2xl">
-            Analyze the 6 core environmental and geotechnical factors contributing to calculated landslide risk.
+            {t('risk.subtitle', 'Analyze the core environmental and geotechnical factors contributing to calculated landslide risk.')}
           </p>
         </div>
 
@@ -162,7 +164,7 @@ export default function RiskMonitoring({ initialLocationId }: RiskMonitoringProp
                           className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase"
                           style={{ backgroundColor: `${itemColor}15`, color: itemColor }}
                         >
-                          {loc.riskLevel}
+                          {t(`risk.${loc.riskLevel.toLowerCase()}`, loc.riskLevel)}
                         </span>
                         {isCur && <Check className="w-4 h-4 text-[#244A36]" />}
                       </div>
@@ -240,7 +242,7 @@ export default function RiskMonitoring({ initialLocationId }: RiskMonitoringProp
                     borderColor: `${riskColor}30` 
                   }}
                 >
-                  {data.riskLevel}
+                  {t(`risk.${data.riskLevel.toLowerCase()}`, data.riskLevel)}
                 </div>
                 <h3 className="text-sm font-bold text-[#1C2826]">{data.riskStatus}</h3>
                 <p className="text-xs text-[#5E7E67] flex items-center gap-1.5 justify-center sm:justify-start">

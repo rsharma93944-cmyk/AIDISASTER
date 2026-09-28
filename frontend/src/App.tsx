@@ -34,6 +34,9 @@ import RescueTeam from './pages/RescueTeam';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { RiskProvider, useRisk } from './context/RiskContext';
 import { User as UserIcon, LogOut, ChevronDown, MessageCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import LanguageWelcome from './components/LanguageWelcome';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 const mapContainerStyle = {
   width: '100%',
@@ -122,6 +125,7 @@ function ResQAILogo() {
 }
 
 function AppContent() {
+  const { t } = useTranslation();
   const { user, isAuthenticated, loading, logout } = useAuth();
   const { activeAlertsCount } = useRisk();
   const [activeTab, setActiveTab] = useState('home');
@@ -132,13 +136,13 @@ function AppContent() {
 
   // Dynamic navigation items based on real-time alerts count
   const navItems = [
-    { id: 'home', label: 'Home', path: '/' },
-    { id: 'live-map', label: 'Live Map', badge: 'Live', path: '/live-map' },
-    { id: 'risk-monitoring', label: 'Risk Monitoring', path: '/risk-monitoring' },
-    { id: 'alerts', label: 'Alerts', count: activeAlertsCount > 0 ? activeAlertsCount : undefined, path: '/alerts' },
-    { id: 'analysis', label: 'AI Analysis', path: '/analysis' },
-    { id: 'assistant', label: 'Assistant', path: '/assistant' },
-    { id: 'risk-simulator', label: 'Simulator', path: '/risk-simulator' },
+    { id: 'home', label: t('nav.home', 'Home'), path: '/' },
+    { id: 'live-map', label: t('nav.liveMap', 'Live Map'), badge: 'Live', path: '/live-map' },
+    { id: 'risk-monitoring', label: t('nav.riskMonitoring', 'Risk Monitoring'), path: '/risk-monitoring' },
+    { id: 'alerts', label: t('nav.alerts', 'Alerts'), count: activeAlertsCount > 0 ? activeAlertsCount : undefined, path: '/alerts' },
+    { id: 'analysis', label: t('nav.aiAnalysis', 'AI Analysis'), path: '/analysis' },
+    { id: 'assistant', label: t('nav.assistant', 'Assistant'), path: '/assistant' },
+    { id: 'risk-simulator', label: t('nav.simulator', 'Simulator'), path: '/risk-simulator' },
   ];
 
   // Google Maps Loader
@@ -320,7 +324,7 @@ function AppContent() {
 
   return (
     <div className="relative w-full min-h-screen bg-[#FAF7F2] font-sans selection:bg-[#244A36]/20 overflow-x-hidden">
-      
+      <LanguageWelcome />
 
         {/* ========================================================================= */}
         {/* CAPSULE NAVBAR                                                           */}
@@ -374,6 +378,8 @@ function AppContent() {
 
             {/* Right: Auth Profile Area / Sign In + Action Button */}
             <div className="flex items-center gap-2 sm:gap-3">
+              <LanguageSwitcher />
+              
               {/* About Link (Desktop) */}
               <button
                 type="button"
@@ -681,14 +687,12 @@ function AppContent() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-bold text-[#1C2826] tracking-tight leading-[1.12] mb-2.5 md:mb-3 font-sans">
-              AI-powered disaster & landslide <br className="hidden sm:inline" />
-              <span className="text-[#244A36]">early warning</span> for India
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-bold text-[#1C2826] tracking-tight leading-[1.12] mb-2.5 md:mb-3 font-sans" dangerouslySetInnerHTML={{ __html: t('home.title', 'AI-powered disaster & landslide <br class="hidden sm:inline" /><span class="text-[#244A36]">early warning</span> for India') }}>
             </h1>
 
             {/* Supporting Micro-Copy */}
             <p className="text-sm sm:text-base text-[#3A4D43] leading-relaxed max-w-xl mb-4 md:mb-5 font-medium">
-              AI-driven risk monitoring, early warning and response support for vulnerable regions across India.
+              {t('home.subtitle', 'AI-driven risk monitoring, early warning and response support for vulnerable regions across India.')}
             </p>
 
             {/* Action Button Row */}
@@ -699,7 +703,7 @@ function AppContent() {
                 className="inline-flex items-center gap-2 px-4.5 py-2 rounded-full bg-[#244A36] text-[#FAF7F2] text-xs sm:text-sm font-semibold tracking-wide hover:bg-[#1B3828] active:scale-[0.98] transition-all duration-200 shadow-[0_4px_16px_rgba(36,74,54,0.25)] border border-[#2E5A44]/30"
               >
                 <MapPin className="w-4 h-4 text-[#A3C7AD]" />
-                <span>Explore Live Grid</span>
+                <span>{t('home.exploreMap', 'Explore India Risk Map')}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#FAF7F2]/70" />
               </button>
 
@@ -709,7 +713,7 @@ function AppContent() {
                 className="inline-flex items-center gap-2 px-4.5 py-2 rounded-full bg-[#FAF7F2]/85 backdrop-blur-md text-[#1C2826] text-xs sm:text-sm font-semibold hover:bg-[#FAF7F2] border border-[#244A36]/15 active:scale-[0.98] transition-all duration-200 shadow-sm"
               >
                 <Activity className="w-4 h-4 text-[#244A36]" />
-                <span>Telemetry Stream</span>
+                <span>{t('home.telemetryStream', 'Monitoring Dashboard')}</span>
               </button>
             </div>
           </div>
@@ -719,18 +723,17 @@ function AppContent() {
             <div className="bg-[#FAF7F2]/80 backdrop-blur-md border border-[#244A36]/12 px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-2.5">
               <span className="flex items-center gap-1.5 font-medium text-[11.5px]">
                 <span className="w-2 h-2 rounded-full bg-[#526E48] animate-pulse" />
-                India Early Warning Grid
+                {t('home.panIndiaGrid', 'Pan-India Early Warning Grid')}
               </span>
               <span className="h-3 w-px bg-[#244A36]/15" />
               <span className="hidden sm:inline text-[11.5px] text-[#5E7E67]">
-                Uttarakhand • Kerala • Maharashtra • Himachal Pradesh • Sikkim • Assam
+                {t('home.statesAndUTs', '28 States • 8 Union Territories')}
               </span>
               <button
                 onClick={() => navigateTo('/live-map', 'live-map')}
                 className="text-[11.5px] text-[#244A36] font-semibold flex items-center gap-0.5 hover:underline"
               >
-                <span>View Radar</span>
-                <ChevronRight className="w-3 h-3" />
+                <span>{t('home.viewMapBtn', 'View India Map →')}</span>
               </button>
             </div>
           </div>

@@ -17,9 +17,12 @@ import {
 import EmergencyContactsModal from '../components/EmergencyContactsModal';
 import AlertEscalationTimeline from '../components/alerts/AlertEscalationTimeline';
 
+import { useTranslation } from 'react-i18next';
+
 type FilterType = 'ALL' | 'ACTIVE' | 'ACKNOWLEDGED' | 'RESOLVED' | 'HIGH' | 'SEVERE';
 
 export default function Alerts() {
+  const { t } = useTranslation();
   const { alerts, activeAlertsCount, acknowledgeAlert, resolveAlert, setSelectedLocationId } = useRisk();
 
   const [activeFilter, setActiveFilter] = useState<FilterType>('ALL');
@@ -178,10 +181,10 @@ export default function Alerts() {
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#1C2826] tracking-tight">
-            Alert Management
+            {t('nav.alerts', 'Alert Management')}
           </h1>
           <p className="text-sm sm:text-base text-[#5E7E67] font-medium mt-1 max-w-2xl">
-            Monitor, review and manage landslide risk alerts across India.
+            {t('alerts.subtitle', 'Monitor, review and manage landslide risk alerts across India.')}
           </p>
         </div>
 
@@ -386,7 +389,7 @@ export default function Alerts() {
                         {/* Severity Badge */}
                         <span className={`text-[11px] font-extrabold px-3 py-1 rounded-full uppercase border flex items-center gap-1.5 backdrop-blur-md ${sevBadge.bg} ${sevBadge.text} ${sevBadge.border}`}>
                           <span className={`w-2 h-2 rounded-full ${sevBadge.dot} animate-pulse`} />
-                          {alert.severity} RISK
+                          {t(`risk.${alert.severity.toLowerCase()}`, alert.severity)} {t('alerts.risk', 'RISK')}
                         </span>
                         {/* Status Badge */}
                         <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase border backdrop-blur-md ${statBadge.bg} ${statBadge.text} ${statBadge.border}`}>
@@ -427,7 +430,7 @@ export default function Alerts() {
                             className="text-xs font-bold text-[#C87941] hover:text-[#A05C2C] flex items-center gap-1.5 hover:underline"
                           >
                             <Route className="w-3.5 h-3.5" />
-                            <span>Find Safer Route</span>
+                            <span>{t('alerts.viewSafeRoute', 'Find Safer Route')}</span>
                           </button>
                         )}
                       </div>
